@@ -1,19 +1,19 @@
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Objects;
 
 public class Project
 {
     private String projectName;
-    private String projectLog;
-    private int totalContributions;
+    private String lastUpdatedBy;
+    private int totalContributions = 0;
     private boolean isCompleted;
 
-    public Project(String projectName)
+    public Project(String projectName, String developersName)
     {
         this.projectName = projectName.toUpperCase();
-        this.projectLog = "[" + getCurrentDate() + "] - INFO: Project "
-                                    + projectName + " created.\n";
-        this.totalContributions = 1;
+        this.lastUpdatedBy = developersName;
+        this.totalContributions++;
         setCompleted(false);
     }
 
@@ -25,39 +25,63 @@ public class Project
         return totalContributions;
     }
 
-    public void addContribution(String message)
+    public String getLastUpdatedBy()
     {
-        this.projectLog += "[" + getCurrentDate() + "] - INFO: Project "
-                            + projectName + " updated. " + message + "\n";
+        return lastUpdatedBy;
+    }
+
+    public void addContribution(String developersName)
+    {
+        this.lastUpdatedBy = developersName;
         totalContributions++;
-
-        if (totalContributions == 100)
-        {
-            setCompleted(true);
-        }
-
     }
 
     public boolean isCompleted() {
         return isCompleted;
     }
 
-    private void setCompleted(boolean completed)
+    public void setCompleted(boolean completed)
     {
         this.isCompleted = completed;
     }
 
-    private String getCurrentDate()
+
+    @Override
+    public boolean equals(Object object)
     {
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd MMM yyyy");
-        return dtf.format(LocalDate.now());
+        if(object instanceof Project)
+        {
+            Project project = (Project) object;
+
+            return getProjectName().equals(project.getProjectName()) &&
+                    getTotalContributions() == project.getTotalContributions() &&
+                    getLastUpdatedBy().equals(project.getLastUpdatedBy());
+        }
+        return false;
+    }
+
+    public int compareTo(Object object)
+    {
+        if(object instanceof Project)
+        {
+            Project project = (Project) object;
+
+            return project.getProjectName().compareTo(this.projectName);
+        }
+        return -1;
+    }
+
+    @Override
+    public int hashCode()
+    {
+        return Objects.hash(getProjectName(), getTotalContributions(), getLastUpdatedBy(), isCompleted());
     }
 
     @Override
     public String toString() {
         return "Project{" +
                 "projectName='" + projectName + '\'' +
-                ", log entries='" + projectLog + '\'' +
+                ", lastUpdatedBy='" + lastUpdatedBy + '\'' +
                 ", totalContributions=" + totalContributions +
                 ", isCompleted=" + isCompleted +
                 '}';
