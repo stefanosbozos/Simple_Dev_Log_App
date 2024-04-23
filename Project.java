@@ -1,19 +1,20 @@
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Objects;
+import java.util.ArrayList;
 
-public class Project
+public class Project implements Comparable<Project>
 {
+// Class Fields
     private String projectName;
-    private String lastUpdatedBy;
+    private ArrayList<String> contributingDevelopers;
     private int totalContributions = 0;
     private boolean isCompleted;
 
     public Project(String projectName, String developersName)
     {
         this.projectName = projectName.toUpperCase();
-        this.lastUpdatedBy = developersName;
-        this.totalContributions++;
+        this.contributingDevelopers = new ArrayList<>();
+        contributingDevelopers.add(developersName);
+        this.totalContributions = contributingDevelopers.size();
         setCompleted(false);
     }
 
@@ -25,15 +26,19 @@ public class Project
         return totalContributions;
     }
 
-    public String getLastUpdatedBy()
+    public ArrayList<String> getContributingDevelopers() {
+        return contributingDevelopers;
+    }
+
+    public String lastUpdatedBy()
     {
-        return lastUpdatedBy;
+        return contributingDevelopers.getLast();
     }
 
     public void addContribution(String developersName)
     {
-        this.lastUpdatedBy = developersName;
-        totalContributions++;
+        contributingDevelopers.add(developersName);
+        totalContributions = contributingDevelopers.size();
     }
 
     public boolean isCompleted() {
@@ -45,7 +50,7 @@ public class Project
         this.isCompleted = completed;
     }
 
-
+// Overridden Methods
     @Override
     public boolean equals(Object object)
     {
@@ -55,33 +60,28 @@ public class Project
 
             return getProjectName().equals(project.getProjectName()) &&
                     getTotalContributions() == project.getTotalContributions() &&
-                    getLastUpdatedBy().equals(project.getLastUpdatedBy());
+                    getContributingDevelopers().equals(project.getContributingDevelopers());
         }
         return false;
     }
 
-    public int compareTo(Object object)
+    @Override
+    public int compareTo(Project projectToCompare)
     {
-        if(object instanceof Project)
-        {
-            Project project = (Project) object;
-
-            return project.getProjectName().compareTo(this.projectName);
-        }
-        return -1;
+        return (int)(this.totalContributions - projectToCompare.totalContributions);
     }
 
     @Override
     public int hashCode()
     {
-        return Objects.hash(getProjectName(), getTotalContributions(), getLastUpdatedBy(), isCompleted());
+        return Objects.hash(getProjectName(), getTotalContributions(), getContributingDevelopers(), isCompleted());
     }
 
     @Override
     public String toString() {
         return "Project{" +
                 "projectName='" + projectName + '\'' +
-                ", lastUpdatedBy='" + lastUpdatedBy + '\'' +
+                ", lastUpdatedBy='" + contributingDevelopers.getLast() + '\'' +
                 ", totalContributions=" + totalContributions +
                 ", isCompleted=" + isCompleted +
                 '}';

@@ -2,13 +2,10 @@ public class Main
 {
     public static void main(String[] args)
     {
-
-        Project p1 = new Project("Test", "Steve");
-        Project p2 = new Project("Bread maker", "John");
-        DevLog d1 = new DevLog(p1);
-        DevLog d2 = new DevLog(p2);
+        DevLog d1 = new DevLog();
+        d1.completeProject("Test");
         d1.show();
-        d2.show();
-
+        System.out.println("Total Contributions today: " + d1.getTotalNumberOfTodayContributions());
+        System.out.println("Projects Updated on 23-04-2024: \n" + d1.getProjectsByDate("23-04-2024"));
     }
 }
