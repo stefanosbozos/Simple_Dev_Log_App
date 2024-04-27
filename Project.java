@@ -3,7 +3,9 @@ import java.util.ArrayList;
 
 public class Project implements Comparable<Project>
 {
-// Class Fields
+    /*
+     * Question 2 b(i)
+     */
     private String projectName;
     private ArrayList<String> contributingDevelopers;
     private int totalContributions = 0;
@@ -50,7 +52,10 @@ public class Project implements Comparable<Project>
         this.isCompleted = completed;
     }
 
-// Overridden Methods
+
+    /*
+     * Question 2 b (ii)
+     */
     @Override
     public boolean equals(Object object)
     {
@@ -79,11 +84,9 @@ public class Project implements Comparable<Project>
 
     @Override
     public String toString() {
-        return "Project{" +
-                "projectName='" + projectName + '\'' +
-                ", lastUpdatedBy='" + contributingDevelopers.getLast() + '\'' +
-                ", totalContributions=" + totalContributions +
-                ", isCompleted=" + isCompleted +
-                '}';
+        return "Project Name:\t" + projectName +
+                "\nLast updated by:\t" + lastUpdatedBy() +
+                "\nNo. of contributions:\t" + totalContributions +
+                "\n" + (isCompleted() ? "[Completed]" : "[In progress]");
     }
 }

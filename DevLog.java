@@ -1,3 +1,5 @@
+import java.io.FileWriter;
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
@@ -16,6 +18,9 @@ public class DevLog
         populate();
     }
 
+    /*
+     * Question 3 a(i)
+     */
     public void updateProject(String projectName, String developerName)
     {
         // Add or update an entry in the map for a project
@@ -35,12 +40,18 @@ public class DevLog
         }
     }
 
+    /*
+     * Question 3 a(ii)
+     */
     public void clear()
     {
         // Clears all entries
         this.contributions.clear();
     }
 
+    /*
+     * Question 3 a(iii)
+     */
     private void populate()
     {
         // Clears the map then creates different example entries suitable for testing.
@@ -55,6 +66,9 @@ public class DevLog
         updateProject("Test", "Brandon");
     }
 
+    /*
+     * Question 3 a(iv)
+     */
     public boolean removeProject(String project)
     {
         // Removes a project from the contributors. Returns True or False if the project was found or not.
@@ -67,6 +81,9 @@ public class DevLog
         return false;
     }
 
+    /*
+     * Question 3 a(v)
+     */
     public void completeProject(String projectName)
     {
         // updates the isComplete field of the project class to True.
@@ -81,6 +98,9 @@ public class DevLog
         }
     }
 
+    /*
+     * Question 3 a(vi)
+     */
     public ArrayList<String> getProjectsByDate(String date)
     {
         // Return a list of all the projects updated on a specific date.
@@ -102,6 +122,9 @@ public class DevLog
         return projects;
     }
 
+    /*
+     * Question 3 a(vii)
+     */
     public int getTotalNumberOfTodayContributions()
     {
         // Returns the total number of contributions for the current date for all projects.
@@ -124,16 +147,61 @@ public class DevLog
         return totalNumberOfContributions;
     }
 
+    /*
+     * Question 3 a(viii)
+     */
     public void show()
     {
         for(Project project : contributions.keySet())
         {
-            System.out.println(project + "\nLast Updated at:");
+            System.out.println(project + "\n\nLast Updated at:");
             for (String entry : contributions.get(project))
             {
                 System.out.println("- " + entry);
             }
+            System.out.println();
         }
+    }
+
+    public boolean writeCSVFile(String fileName) throws IOException
+    {
+        /*
+         * Extract the Developer's Log Projects to a csv file. Returns
+         * true if there was an exception, or false if not.
+         */
+        try
+        {
+            FileWriter writer = new FileWriter(fileName);
+            String currentLine = "Project Name,Last updated by,Total contributions,Status,Updated at\n";
+            writer.write(currentLine);
+
+            for (Project key : contributions.keySet())
+            {
+                currentLine =   key.getProjectName() + "," +
+                                key.lastUpdatedBy() + "," +
+                                key.getTotalContributions() + "," +
+                                (key.isCompleted() ? "Completed" : "In Progress");
+                //writer.write(currentLine);
+
+                for (String entry : contributions.get(key))
+                {
+                    currentLine += ",[" + entry + "]";
+                }
+
+                currentLine += "\n";
+                writer.write(currentLine);
+            }
+
+            writer.close();
+
+        }
+        catch (Exception e)
+        {
+            System.err.println("[ERROR] File was not saved successfully. \nReason: " + e);
+            return true;
+        }
+
+        return false;
     }
 
 // Private Methods
