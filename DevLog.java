@@ -24,19 +24,29 @@ public class DevLog
     public void updateProject(String projectName, String developerName)
     {
         // Add or update an entry in the map for a project
-        Project projectToUpdate = fetchProjectByName(projectName);
-        if (projectExists(projectToUpdate))
+        if (projectName.length() > 1 && projectName.length() < 20)
         {
-            lastUpdateAt = contributions.get(projectToUpdate);
-            lastUpdateAt.add(applyTimestamp());
-            removeProject(projectToUpdate.getProjectName());
-            projectToUpdate.addContribution(developerName);
-            contributions.put(projectToUpdate, lastUpdateAt);
+            Project projectToUpdate = fetchProjectByName(projectName);
+            if (projectExists(projectToUpdate))
+            {
+                lastUpdateAt = contributions.get(projectToUpdate);
+                lastUpdateAt.add(applyTimestamp());
+                removeProject(projectToUpdate.getProjectName());
+                projectToUpdate.addContribution(developerName);
+                contributions.put(projectToUpdate, lastUpdateAt);
+                System.out.println("Project " + projectName + " updated by " + developerName + ".");
+
+            }
+            else
+            {
+                projectToUpdate = new Project(projectName, developerName);
+                addNewProject(projectToUpdate);
+                System.out.println("Project " + projectName + " created by " + developerName + ".");
+            }
         }
         else
         {
-            projectToUpdate = new Project(projectName, developerName);
-            addNewProject(projectToUpdate);
+            System.out.println("Project name should be more than 2 and less that 20 characters long.");
         }
     }
 
@@ -52,18 +62,18 @@ public class DevLog
     /*
      * Question 3 a(iii)
      */
-    private void populate()
+    public void populate()
     {
         // Clears the map then creates different example entries suitable for testing.
         clear();
-        updateProject("Test", "Steve");
-        updateProject("Bread maker", "John");
-        updateProject("Test 2", "Jason");
-        updateProject("Bread maker", "Aaron");
-        updateProject("Bread maker", "Baxter");
-        updateProject("Bread maker", "Steve");
-        updateProject("Bread maker", "Aaron");
-        updateProject("Test", "Brandon");
+        updateProject("Calculator", "Steve");
+        updateProject("AI Assistant", "John");
+        updateProject("Killer FPS", "Jason");
+        updateProject("Calculator", "Aaron");
+        updateProject("Killer FPS", "Baxter");
+        updateProject("Killer FPS", "Steve");
+        updateProject("Killer FPS", "Aaron");
+        updateProject("AI Assistant", "Brandon");
     }
 
     /*
