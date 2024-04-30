@@ -24,7 +24,7 @@ public class DevLog
     public void updateProject(String projectName, String developerName)
     {
         // Add or update an entry in the map for a project
-        if (projectName.length() > 1 && projectName.length() < 20)
+        if (projectName.length() > 2 && projectName.length() < 20)
         {
             Project projectToUpdate = fetchProjectByName(projectName);
             if (projectExists(projectToUpdate))
@@ -94,7 +94,7 @@ public class DevLog
     /*
      * Question 3 a(v)
      */
-    public void completeProject(String projectName)
+    public boolean completeProject(String projectName)
     {
         // updates the isComplete field of the project class to True.
         Project projectToComplete = fetchProjectByName(projectName);
@@ -105,7 +105,10 @@ public class DevLog
             removeProject(projectToComplete.getProjectName());
             projectToComplete.setCompleted(true);
             contributions.put(projectToComplete, lastUpdateAt);
+            return true;
         }
+        System.out.println("Project " + projectName + " was not updated. Project does not exist.");
+        return false;
     }
 
     /*
