@@ -1,24 +1,35 @@
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
+
 public class TestDevLog
+{
+    public static void main(String[] args) throws IOException
+    {
+        ConductTests tests = new ConductTests();
+    }
+}
+
+class ConductTests
 {
     DevLog devLog;
 
-    public TestDevLog()
+    public ConductTests() throws IOException
     {
         devLog = new DevLog();
         runTest();
     }
 
-    private void runTest()
+    private void runTest() throws IOException
     {
         testUpdateProject();
         testRemoveProject();
         testCompleteProject();
         testTodayContributions();
         testProjectsByDate();
+        testWriteFile();
     }
 
     private void testRemoveProject()
@@ -131,6 +142,20 @@ public class TestDevLog
         );
 
         System.out.println("=============================== END TEST ================================\n");
+    }
+
+    private void testWriteFile() throws IOException
+    {
+        boolean test1 = devLog.writeCSVFile("Test_1");
+        boolean test2 = devLog.writeCSVFile(null);
+
+        System.out.println("================ TEST PROJECTS BY DATE ==================");
+
+        System.out.println("Test 1: " + (test1 ? "PASS" : "FAIL expected true and got " + test1));
+        System.out.println("Test 2: " + (!test2 ? "PASS" : "FAIL expected false and got " + test1));
+
+        System.out.println("=============================== END TEST ================================\n");
+
     }
 
     private String applyTimestamp()

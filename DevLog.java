@@ -211,10 +211,10 @@ public class DevLog
         catch (Exception e)
         {
             System.err.println("[ERROR] File was not saved successfully. \nReason: " + e);
-            return true;
+            return false;
         }
 
-        return false;
+        return true;
     }
 
 // Private Methods
