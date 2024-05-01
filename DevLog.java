@@ -46,7 +46,6 @@ public class DevLog
         // Check if the project exists. If not it will return null.
         Project projectToUpdate = fetchProjectByName(projectName);
 
-        // If not null update the project.
         if (projectExists(projectToUpdate))
         {
             return updateExistingProject(projectName, developerName, projectToUpdate);
