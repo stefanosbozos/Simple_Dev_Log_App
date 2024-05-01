@@ -103,7 +103,7 @@ public class DevLog
             lastUpdateAt = contributions.get(projectToComplete);
             lastUpdateAt.add(applyTimestamp());
             removeProject(projectToComplete.getProjectName());
-            projectToComplete.setCompleted(true);
+            projectToComplete.changeCompletionStatus();
             contributions.put(projectToComplete, lastUpdateAt);
             return true;
         }

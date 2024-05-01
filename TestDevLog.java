@@ -3,20 +3,11 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
-
 public class TestDevLog
-{
-    public static void main(String[] args) throws IOException
-    {
-        ConductTests tests = new ConductTests();
-    }
-}
-
-class ConductTests
 {
     DevLog devLog;
 
-    public ConductTests() throws IOException
+    public TestDevLog() throws IOException
     {
         devLog = new DevLog();
         runTest();
@@ -34,7 +25,7 @@ class ConductTests
 
     private void testRemoveProject()
     {
-        System.out.println("=========================== TEST REMOVE PROJECT ==================================");
+        System.out.printf("%n %35s %n%n", "[TEST REMOVE A PROJECT]");
 
         devLog.updateProject("DOOM", "Carmack");    // New Project
         devLog.updateProject("Killer FPS", "Carmack");  // Existing Project
@@ -67,12 +58,13 @@ class ConductTests
 
             }
         }
-        System.out.println("=============================== END TEST ================================\n");
+        System.out.printf("%n %28s %n","[END OF TEST]");
     }
 
     private void testUpdateProject()
     {
-        System.out.printf("=========================== TEST UPDATE PROJECT ==========================");
+        System.out.printf("%n %35s %n%n", "[TEST UPDATE A PROJECT]");
+
         System.out.println("TEST 1: Update project Killer FPS by Carmack");
         devLog.updateProject("Killer FPS", "Carmack");
         System.out.println("TEST 2: Create project DOOM by Romero");
@@ -82,12 +74,12 @@ class ConductTests
         System.out.println("TEST 4: Project name too long.");
         devLog.updateProject("This is a really looooooooooooooooooooooooooooooooooooooooooooooooooooooooong name", "Cliffy B");
 
-        System.out.println("=============================== END TEST ================================\n");
+        System.out.printf("%n %28s %n","[END OF TEST]");
     }
 
     private void testCompleteProject()
     {
-        System.out.println("================ TEST COMPLETE A PROJECT ==================");
+        System.out.printf("%n %35s %n%n", "[TEST SET A PROJECT AS COMPLETE]");
         reinitialize();
 
         boolean[] testCompleteCase = new boolean[4];
@@ -110,23 +102,23 @@ class ConductTests
 
             }
         }
-        System.out.println("=============================== END TEST ================================\n");
+        System.out.printf("%n %28s %n","[END OF TEST]");
     }
 
     private void testTodayContributions()
     {
-        System.out.println("================ TEST TODAY CONTRIBUTIONS ==================");
+        System.out.printf("%n %35s %n%n", "[TEST PROJECTS TODAY CONTRIBUTIONS]");
         reinitialize();
         int todayContributions = devLog.getTotalNumberOfTodayContributions();
         System.out.println("Test number of today's contributions: " +
                 (todayContributions == 8 ? "PASS" : "FAIL - Expected " + 8 + " got " + todayContributions));
 
-        System.out.println("=============================== END TEST ================================\n");
+        System.out.printf("%n %28s %n","[END OF TEST]");
     }
 
     private void testProjectsByDate()
     {
-        System.out.println("================ TEST PROJECTS BY DATE ==================");
+        System.out.printf("%n %35s %n%n", "[TEST GET PROJECTS BY CERTAIN DATE]");
 
         reinitialize();
 
@@ -141,7 +133,7 @@ class ConductTests
                 expectedProjects.equals(todayProjectsTest) ? "PASS" : "FAIL"
         );
 
-        System.out.println("=============================== END TEST ================================\n");
+        System.out.printf("%n %28s %n","[END OF TEST]");
     }
 
     private void testWriteFile() throws IOException
@@ -149,12 +141,12 @@ class ConductTests
         boolean test1 = devLog.writeCSVFile("Test_1");
         boolean test2 = devLog.writeCSVFile(null);
 
-        System.out.println("================ TEST PROJECTS BY DATE ==================");
+        System.out.printf("%n %35s %n%n", "[TEST EXTRACT DATA TO A CSV FILE]");
 
-        System.out.println("Test 1: " + (test1 ? "PASS" : "FAIL expected true and got " + test1));
-        System.out.println("Test 2: " + (!test2 ? "PASS" : "FAIL expected false and got " + test1));
+        System.out.println("Test Create a file named \"Test_1\": " + (test1 ? "PASS" : "FAIL expected true and got " + test1));
+        System.out.println("Test Pass a null value as filename: " + (!test2 ? "PASS" : "FAIL expected false and got " + test1));
 
-        System.out.println("=============================== END TEST ================================\n");
+        System.out.printf("%n %28s %n","[END OF TEST]");
 
     }
 
@@ -167,8 +159,8 @@ class ConductTests
 
     private void reinitialize()
     {
-        System.out.println("[CLASS REINITIALIZATION]");
+        System.out.printf("%20s %n","[CLASS REINITIALIZATION]");
         devLog.populate();
-        System.out.println("[REINITIALIZATION END]");
+        System.out.printf("%20s %n","[REINITIALIZATION END]");
     }
 }
