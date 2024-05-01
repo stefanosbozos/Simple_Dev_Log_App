@@ -27,12 +27,12 @@ public class TestDevLog
     {
         System.out.printf("%n %35s %n%n", "[TEST REMOVE A PROJECT]");
 
-        devLog.updateProject("DOOM", "Carmack");    // New Project
-        devLog.updateProject("Killer FPS", "Carmack");  // Existing Project
-        devLog.updateProject("", "");   // Empty Name Project
-        devLog.updateProject("DA", "da");   // Less than accepted characters project
-        devLog.updateProject("RNA", "DNA"); // The least possible name size for a project
-        devLog.updateProject("This is a really looooooooooooooooooooooooooooooooooooooooooooooooooooooooong name", "Nobody");   // More than accepted characters
+        devLog.contributeToProject("DOOM", "Carmack");    // New Project
+        devLog.contributeToProject("Killer FPS", "Carmack");  // Existing Project
+        devLog.contributeToProject("", "");   // Empty Name Project
+        devLog.contributeToProject("DA", "da");   // Less than accepted characters project
+        devLog.contributeToProject("RNA", "DNA"); // The least possible name size for a project
+        devLog.contributeToProject("This is a really looooooooooooooooooooooooooooooooooooooooooooooooooooooooong name", "Nobody");   // More than accepted characters
 
         boolean[] testRemoveCase = new boolean[7];
         testRemoveCase[0] = devLog.removeProject("DOOM");
@@ -66,13 +66,13 @@ public class TestDevLog
         System.out.printf("%n %35s %n%n", "[TEST UPDATE A PROJECT]");
 
         System.out.println("TEST 1: Update project Killer FPS by Carmack");
-        devLog.updateProject("Killer FPS", "Carmack");
+        devLog.contributeToProject("Killer FPS", "Carmack");
         System.out.println("TEST 2: Create project DOOM by Romero");
-        devLog.updateProject("DOOM", "Romero");
+        devLog.contributeToProject("DOOM", "Romero");
         System.out.println("TEST 3: Project name too short.");
-        devLog.updateProject("", "American McGee");
+        devLog.contributeToProject("", "American McGee");
         System.out.println("TEST 4: Project name too long.");
-        devLog.updateProject("This is a really looooooooooooooooooooooooooooooooooooooooooooooooooooooooong name", "Cliffy B");
+        devLog.contributeToProject("This is a really looooooooooooooooooooooooooooooooooooooooooooooooooooooooong name", "Cliffy B");
 
         System.out.printf("%n %28s %n","[END OF TEST]");
     }
@@ -83,9 +83,9 @@ public class TestDevLog
         reinitialize();
 
         boolean[] testCompleteCase = new boolean[4];
-        testCompleteCase[0] = devLog.completeProject("DOOM");
-        testCompleteCase[1] = devLog.completeProject("Killer FPS");
-        testCompleteCase[2] = devLog.completeProject("Calculator");
+        testCompleteCase[0] = devLog.setProjectComplete("DOOM");
+        testCompleteCase[1] = devLog.setProjectComplete("Killer FPS");
+        testCompleteCase[2] = devLog.setProjectComplete("Calculator");
 
         for (int i = 0; i < testCompleteCase.length; i++)
         {
@@ -109,7 +109,7 @@ public class TestDevLog
     {
         System.out.printf("%n %35s %n%n", "[TEST PROJECTS TODAY CONTRIBUTIONS]");
         reinitialize();
-        int todayContributions = devLog.getTotalNumberOfTodayContributions();
+        int todayContributions = devLog.getNumberOfTodaysUpdates();
         System.out.println("Test number of today's contributions: " +
                 (todayContributions == 8 ? "PASS" : "FAIL - Expected " + 8 + " got " + todayContributions));
 
@@ -127,7 +127,7 @@ public class TestDevLog
         expectedProjects.add("CALCULATOR");
         expectedProjects.add("AI ASSISTANT");
         expectedProjects.add("KILLER FPS");
-        ArrayList<String> todayProjectsTest = devLog.getProjectsByDate(today);
+        ArrayList<String> todayProjectsTest = devLog.getProjectsOnDate(today);
 
         System.out.println(
                 expectedProjects.equals(todayProjectsTest) ? "PASS" : "FAIL"
@@ -138,8 +138,8 @@ public class TestDevLog
 
     private void testWriteFile() throws IOException
     {
-        boolean test1 = devLog.writeCSVFile("Test_1");
-        boolean test2 = devLog.writeCSVFile(null);
+        boolean test1 = devLog.saveToCSV("Test_1");
+        boolean test2 = devLog.saveToCSV(null);
 
         System.out.printf("%n %35s %n%n", "[TEST EXTRACT DATA TO A CSV FILE]");
 
