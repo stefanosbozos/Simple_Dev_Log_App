@@ -1,0 +1,22 @@
+Questions 3 d(i)
+
+In order to read from a comma-separated-values (csv) file with scanner, I would use the
+methods .useDelimiter(), .hasNext() and .next(). The useDelimiter() method will separate
+each entry once a comma is found, and will repeat the same process for every next line in
+the document. More specifically below is a code fragment that I could use to read from a
+test.csv file.
+
+Scanner scanner = new Scanner(new File("test.csv"));
+scanner.userDelimiter(",");
+while(scanner.hasNext())
+{
+     // do something with the item of scanner.next()
+}
+
+
+Question 4 d(ii)
+
+While designing the application, I first thought that a key should be unique, can easily
+be identified in the map, and can easily be referenced only by its name. Any other entity
+of the DevLog class (a developer or a timestamp) are objects that can be repeated, which does
+not class them as unique, so it disqualifies them as potential candidate keys.
