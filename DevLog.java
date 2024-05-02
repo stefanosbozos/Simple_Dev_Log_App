@@ -31,11 +31,8 @@ public class DevLog
 
     /**
      *  Question 3 a(i)
-     *  Checks if a project exists based on its name and if it does and the project is not complete,
-     *  updates the project by adding a new timestamp, passes the developer's name to the list of
-     *  developers for the Project, and updates the number of contributions. Otherwise, checks if the argument
-     *  that is passed as name of the project is between 2 and 20 characters long and adds a new project to the
-     *  DevLog map.
+     *  Adds a new contributions (update) to an existing project (key) of the contributions map. If the
+     *  project does not exist in the map, creates a new project.
      *
      * @param projectName a String representing the name of the project we want to update or create.
      * @param developerName a String representing the name of the developer that updates the projects or creates it.
@@ -97,7 +94,10 @@ public class DevLog
             contributions.put(projectToComplete, lastUpdateAt);
             return true;
         }
-        System.out.println("Project " + projectName + " was not updated. Project does not exist or does not accept any more updates.");
+        if(!TestDevLog.isTesting)
+        {
+            System.out.println("Project " + projectName + " was not updated. Project does not exist or does not accept any more updates.");
+        }
         return false;
     }
 
@@ -200,7 +200,6 @@ public class DevLog
     {
         try
         {
-            fileName += fileName + ".csv";
             FileWriter writer = new FileWriter(fileName);
             String currentLine = "Project Name,Last updated by,Total contributions,Status,Updated at\n";
             writer.write(currentLine);
@@ -224,7 +223,10 @@ public class DevLog
         }
         catch (Exception e)
         {
-            System.out.println("[ERROR] File was not saved successfully. \nReason: " + e);
+            if(!TestDevLog.isTesting)
+            {
+                System.out.println("[ERROR] File was not saved successfully. \nReason: " + e);
+            }
             return false;
         }
         return true;
@@ -275,12 +277,18 @@ public class DevLog
         {
             projectToUpdate = new Project(projectName, developerName);
             addNewProject(projectToUpdate);
-            System.out.println("Project " + projectName + " created by " + developerName + ".");
+            if(!TestDevLog.isTesting)
+            {
+                System.out.println("Project " + projectName + " created by " + developerName + ".");
+            }
             return true;
         }
         else
         {
-            System.out.println("Project name should be more than 2 and less that 20 characters long.");
+            if(!TestDevLog.isTesting)
+            {
+                System.out.println("Project name should be more than 2 and less that 20 characters long.");
+            }
             return false;
         }
     }
@@ -307,12 +315,18 @@ public class DevLog
             removeProject(projectToUpdate.getProjectName());
             projectToUpdate.addContribution(developerName);
             contributions.put(projectToUpdate, lastUpdateAt);
-            System.out.println("Project " + projectName + " updated by " + developerName + ".");
+            if (!TestDevLog.isTesting)
+            {
+                System.out.println("Project " + projectName + " updated by " + developerName + ".");
+            }
             return true;
         }
         else
         {
-            System.out.println("Project " + projectName + " cannot be updated as it is marked as Complete.");
+            if(!TestDevLog.isTesting)
+            {
+                System.out.println("Project " + projectName + " cannot be updated as it is marked as Complete.");
+            }
             return false;
         }
     }
